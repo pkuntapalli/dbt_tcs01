@@ -1,0 +1,29 @@
+version: 2
+models:
+  - name: stg_nations
+    columns:
+      - name: nation_id
+        tests:
+          - unique
+          - not_null
+      - name: region_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_regions')
+              field: region_id
+              config:
+                store_failures: true
+  - name: stg_regions
+    columns:
+      - name: region_id
+        tests:
+          - unique
+          - not_null
+      - name: name
+        description: Maintains name
+        tests:   
+          - accepted_values:
+              values: ['ASIA','AFRICA','AMERICA','EUROPE','MIDDLE EAST', 'xxxx']
+              config:
+                store_failures: true
